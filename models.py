@@ -1,7 +1,7 @@
 from net import _mlp, _embed_dict, _linear
 from misc import util
 
-import scipy.misc
+import scipy.special
 import gflags
 import numpy as np
 import sys
@@ -183,7 +183,7 @@ class Decoder(object):
                     {self.t_last: last, self.t_last_hidden: last_hidden})
             if temp is None:
                 preds = np.argmax(next_pred, axis=-1)
-                lse = scipy.misc.logsumexp(next_pred, axis=-1)
+                lse = scipy.special.logsumexp(next_pred, axis=-1)
                 next_out_logits = next_pred - lse[..., np.newaxis]
                 #next_out = zip(next_out, list(np.max(next_out_logits, axis=-1)))
                 if self.multi:
@@ -661,15 +661,15 @@ class TransducerModel(object):
                     worst_score[j] = score
 
         hyps = best_hyps
-        print >>sys.stderr, best_score
+        print(best_score, file=sys.stderr)
 
-        print >>sys.stderr, "\n".join(" ".join(self.task.hint_vocab.get(c) for c in hyp) for hyp in hyps[:3])
-        print >>sys.stderr, "\n".join(" ".join(self.task.hint_vocab.get(c) for c in hyp if c) for hyp in feed[self.t_hint][:3])
-        print >>sys.stderr
+        print("\n".join(" ".join(self.task.hint_vocab.get(c) for c in hyp) for hyp in hyps[:3]), file=sys.stderr)
+        print("\n".join(" ".join(self.task.hint_vocab.get(c) for c in hyp if c) for hyp in feed[self.t_hint][:3]), file=sys.stderr)
+        print('', file=sys.stderr)
 
-        print "[found_gold]  %0.2f" % np.mean(found_gold)
-        print "[chose_gold]  %0.2f" % np.mean(chose_gold)
-        print "[found_exact] %0.2f" % np.mean(found_exact)
+        print("[found_gold]  %0.2f" % np.mean(found_gold))
+        print("[chose_gold]  %0.2f" % np.mean(chose_gold))
+        print("[found_exact] %0.2f" % np.mean(found_exact))
 
         return hyps
 

@@ -2,11 +2,7 @@
 
 To use:
 - download the data from http://nlp.stanford.edu/data/muj/shapeworld_4k.tar.gz, and untar inside `data` folder, to create `data/shapeworld` folder
-- use python 2, e.g.
-```
-virtualenv -p python2 .venv
-source .venv/bin/activate
-```
+- use python 3
 - install requirements.txt, e.g.
 ```
 pip install -r requirements.txt

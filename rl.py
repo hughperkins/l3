@@ -62,19 +62,19 @@ def main():
             print("[tst_rew] %01.4f" % (total_test_rew / len(test_rews)))
             hyps = policy.sample_hyps(3)
             for hyp in hyps:
-                print " ".join(policy.task.vocab.get(w) for w in hyp)
-            print
+                print(" ".join(policy.task.vocab.get(w) for w in hyp))
+            print("")
 
             if i_epoch % 10 == 0:
                 policy.save()
 
     if FLAGS.test:
         for i_datum in task.test_ids:
-            print "TEST DATUM", i_datum
+            print(TEST DATUM", i_datum)
             policy.restore(FLAGS.restore)
             policy.reset()
             state = task.sample_test(i_datum, erase_hint=False)
-            print " ".join(task.vocab.get(w) for w in state.instruction)
+            print(" ".join(task.vocab.get(w) for w in state.instruction))
             for i_epoch in range(FLAGS.n_epochs):
                 total_rew = 0.
                 n_rollouts = 0
@@ -104,7 +104,7 @@ def do_rollout(task, policy, states, vis=False, expert=False):
                 continue
             state = states[i_state]
             if i_state == 0 and vis:
-                print state.render()
+                print(state.render())
             action = state.expert_a if expert else actions[i_state]
             state_, reward, stop = state.step(action)
             bufs[i_state].append((state, action, state_, reward))
@@ -112,7 +112,7 @@ def do_rollout(task, policy, states, vis=False, expert=False):
             if stop:
                 done[i_state] = True
                 if i_state == 0 and vis:
-                    print state_.render()
+                    print(state_.render())
         if all(done):
             break
 
